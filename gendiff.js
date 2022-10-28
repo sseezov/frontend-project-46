@@ -3,9 +3,9 @@ const program = new Command();
 
 program
   .name('gendiff')
+  .argument('<filepath1> <filepath2>')
   .description('CLI to some JavaScript string utilities')
-  .version('0.8.0');
-
-program;
+  .version('0.8.0')
+  .option('-f, --format <type>', 'output format');
 
 program.parse();
