@@ -1,6 +1,7 @@
 const { Command } = require('commander');
+
 const program = new Command();
-const compareDatas = require('./src/tools.js')
+const compareDatas = require('./src/tools.js');
 
 program
   .name('gendiff')
