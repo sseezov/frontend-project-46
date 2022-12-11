@@ -1,11 +1,7 @@
 const fs = require('fs');
 const { Command } = require('commander');
+const { getData } = require('../parsers.js')
 
-function getData(file1, file2) {
-  const file1Data = JSON.parse(fs.readFileSync(file1, 'utf-8'));
-  const file2Data = JSON.parse(fs.readFileSync(file2, 'utf-8'));
-  return [file1Data, file2Data];
-}
 
 function compareKeys(obj1, obj2) {
   const obj1Keys = Object.keys(obj1).sort();
