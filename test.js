@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-const { expect, test } = require('@jest/globals');
+// const { expect, test } = require('@jest/globals');
 const fs = require('fs');
 const getData = require('./parsers.js')
 
@@ -30,15 +30,53 @@ function compareDatas(file1, file2) {
   return compareKeys(file1Data, file2Data);
 }
 
-const result = {
-  "  host": "hexlet.io",
-  "+ follow": false,
-  "+ proxy": "123.234.53.22",
-  "+ timeout": 50,
-  "- timeout": 20,
-  "- verbose": true,
-};
+// const result = {
+//   common: {
+//       "+ follow": false,
+//       "setting1": 'Value 1',
+//       "- setting2": 200,
+//       - setting3: true,
+//       + setting3: null,
+//       + setting4: blah blah,
+//       + setting5: {
+//     key5: value5,
+//   }
+// setting6: {
+//   doge: {
+//     - wow:,
+//     + wow: so much,
+//   }
+//   key: value,
+//     + ops: vops,
+// }
+//     }
+// group1: {
+//   - baz: bas,
+//     + baz: bars,
+//   foo: bar,
+//     - nest: {
+//     key: value,
+//   }
+//   + nest: str,
+// }
+// - group2: {
+//   abc: 12345,
+//   deep: {
+//     id: 45,
+//   }
+// }
+// + group3: {
+//   deep: {
+//     id: {
+//       number: 45,
+//     }
+//   }
+//   fee: 100500,
+// }
+// }
 
-test('compare 2 files', () => {
-  expect(compareDatas('./__fixtures__/file1.json', './__fixtures__/file2.json')).toEqual(result);
-});
+// test('compare 2 files', () => {
+//   expect(compareDatas('./__fixtures__/file1.json', './__fixtures__/file2.json')).toEqual(result);
+// });
+
+console.log(compareDatas('./__fixtures__/file1.json', './__fixtures__/file2.json'))

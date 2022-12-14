@@ -1,4 +1,4 @@
-const fs = require('fs');
+import fs from 'fs';
 
 function getData(file1, file2) {
   const file1Data = JSON.parse(fs.readFileSync(file1, 'utf-8'));
