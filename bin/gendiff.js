@@ -1,4 +1,5 @@
 import { program } from 'commander';
+import { genDiff } from '../src/index.js';
 
 program
   .description('Compares two configuration files and shows a difference.')
