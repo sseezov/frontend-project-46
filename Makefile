@@ -7,6 +7,11 @@ lint:
 lintfix:
 	npx eslint . --fix
 
-test:
+testUnit:
 	node bin/gendiff __fixtures__/file1.json __fixtures__/file2.json
 
+test:
+	node --experimental-vm-modules node_modules/jest/bin/jest.js
+
+test-coverage:
+	cross-env NODE_OPTIONS=--experimental-vm-modules npx jest --coverage
