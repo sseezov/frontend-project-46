@@ -1,16 +1,18 @@
 #!/usr/bin/env node
-import { program } from 'commander';
+import { Command } from 'commander';
 import genDiff from '../src/index.js';
 
+const program = new Command();
+
 program
-  .name('gendiff')
-  .description('Compares two configuration files and shows a difference.')
-  .version('1.0.0')
+  .name('gendiff.js')
+  .usage('[options] <filepath1> <filepath2>')
+  .description('Compares two configuration files and shows a difference')
+  .version('0.0.1', '-v, --vers', 'output the version number')
   .option('-f, --format <type>', 'output format', 'stylish')
-  .arguments('<filepath1 <filepath2>')
-  .action((filepath1, filepath2) => {
-    const differenseOutput = genDiff(filepath1, filepath2, program.opts().format);
-    console.log(differenseOutput);
+  .arguments('<filepath1> <filepath2>')
+  .action((filepath1, filepath2, options) => {
+    console.log(genDiff(filepath1, filepath2, options.format));
   });
 
 program.parse();

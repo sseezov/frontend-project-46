@@ -1,15 +1,15 @@
-import { load as YMLParse } from 'js-yaml';
+import { load } from 'js-yaml';
 
-const parse = (data, format) => {
-  switch (format) {
+const parsers = (content, formatName) => {
+  switch (formatName) {
     case 'json':
-      return JSON.stringify(data);
-    case 'yaml':
+      return JSON.parse(content);
     case 'yml':
-      return YMLParse(data);
+    case 'yaml':
+      return load(content);
     default:
-      throw new Error(`Unknown format: ${format}`);
+      throw new Error('Invalid file format! Try supported formats.');
   }
 };
 
-export default parse;
+export default parsers;

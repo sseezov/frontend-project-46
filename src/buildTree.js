@@ -47,4 +47,5 @@ const getDifferenceTree = (data1, data2) => ({
   type: 'root',
   children: buildDifference(data1, data2),
 });
+
 export default getDifferenceTree;

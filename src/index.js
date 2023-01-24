@@ -1,25 +1,25 @@
-/* eslint-disable no-restricted-syntax */
-import fs from 'fs';
-import path from 'node:path';
-import getDifferenceTree from './getDiffTree.js';
-import parse from './parse.js';
+import { resolve, extname } from 'path';
+import { readFileSync } from 'fs';
+import parsers from './parse.js';
+import buildTree from './buildTree.js';
+import format from './formatters/index.js';
 
-const getAbsolutePath = (fileName) => path.resolve(process.cwd(), fileName);
+const getFormat = (filepath) => extname(filepath).slice(1);
 
-const getData = (filepath) => {
-  const absolutePath = getAbsolutePath(filepath);
-  const formatName = path.extname(absolutePath).slice(1);
-  const readFile = fs.readFileSync(absolutePath, 'utf-8');
-  const parsedData = parse(readFile, formatName);
-  return parsedData;
-};
+const getFixturePath = (filepath) => resolve(process.cwd(), filepath);
 
-const genDiff = (filepath1, filepath2) => {
-  const data1 = getData(filepath1);
-  const data2 = getData(filepath2);
-  const differenceTree = getDifferenceTree(data1, data2);
-  const result = JSON.stringify(differenceTree);
-  return result;
+const readFile = (filepath) => readFileSync(getFixturePath(filepath, 'utf-8'));
+
+const genDiff = (filepath1, filepath2, formatName = 'stylish') => {
+  const readFile1 = readFile(filepath1);
+  const readFile2 = readFile(filepath2);
+
+  const file1 = parsers(readFile1, getFormat(filepath1));
+  const file2 = parsers(readFile2, getFormat(filepath2));
+
+  const tree = buildTree(file1, file2);
+
+  return format(tree, formatName);
 };
 
 export default genDiff;

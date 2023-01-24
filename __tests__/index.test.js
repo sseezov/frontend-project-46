@@ -1,32 +1,31 @@
-/* eslint no-underscore-dangle: ["error", { "allow": ["__filename", __dirname] }] */
-import path from 'path';
-import { fileURLToPath } from 'node:url';
+/* eslint-disable no-underscore-dangle */
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { test, expect } from '@jest/globals';
+import { dirname, resolve } from 'path';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+
 import genDiff from '../src/index.js';
-import parsers from '../src/parsers.js';
-import { result1 } from '../__fixtures__/results.js';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = dirname(__filename);
 
-const getPath = (file) => path.join(__dirname, '../__fixtures__', file);
+const getFixturePath = (filename) => resolve(__dirname, '..', '__fixtures__', filename);
 
-test('Difference JSON format', () => {
-  const JSON1Path = getPath('file1.json');
-  const JSON2Path = getPath('file2.json');
-  const JSONgenDiff = genDiff(JSON1Path, JSON2Path);
-  expect(JSONgenDiff).toEqual(result1);
+const readFile = (filename) => readFileSync(getFixturePath(filename), 'utf-8');
 
-  const YML1Path = getPath('file1.yml');
-  const YML2Path = getPath('file2.yml');
-  const YMLgenDiff = genDiff(YML1Path, YML2Path);
-  expect(YMLgenDiff).toEqual(result1);
+const expectedResultStylish = readFile('expectedStylish.txt');
+const expectedResultPlain = readFile('expectedPlain.txt');
+const expectedResultJson = readFile('expectedJson.txt');
 
-  const YAML1Path = getPath('file1.yaml');
-  const YAML2Path = getPath('file2.yaml');
-  const YAMLgenDiff = genDiff(YAML1Path, YAML2Path);
-  expect(YAMLgenDiff).toEqual(result1);
-});
+const formatsFiles = ['json', 'yaml', 'yml'];
 
-test('Throw errors', () => {
-  expect(() => parsers('', undefined)).toThrow(Error);
+test.each(formatsFiles)('diff formats of files (.json .yaml .yml)', (extension) => {
+  const fileName1 = `${process.cwd()}/__fixtures__/file1.${extension}`;
+  const fileName2 = `${process.cwd()}/__fixtures__/file2.${extension}`;
+
+  expect(genDiff(fileName1, fileName2, 'stylish')).toEqual(expectedResultStylish);
+  expect(genDiff(fileName1, fileName2, 'plain')).toEqual(expectedResultPlain);
+  expect(genDiff(fileName1, fileName2, 'json')).toEqual(expectedResultJson);
+  expect(genDiff(fileName1, fileName2)).toEqual(expectedResultStylish);
 });
