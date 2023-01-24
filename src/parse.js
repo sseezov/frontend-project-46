@@ -1,9 +1,9 @@
 import { load as YMLParse } from 'js-yaml';
 
-const parseData = (data, format) => {
+const parse = (data, format) => {
   switch (format) {
     case 'json':
-      return JSON.parse(data);
+      return JSON.stringify(data);
     case 'yaml':
     case 'yml':
       return YMLParse(data);
@@ -12,4 +12,4 @@ const parseData = (data, format) => {
   }
 };
 
-export default parseData;
+export default parse;
