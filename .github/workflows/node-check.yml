@@ -13,9 +13,11 @@ jobs:
         with:
           node-version: 16.x
           cache: 'npm'
-      - name: Make test
+      - name: Install
         run: |
           make install
+      - name: run eslint
+        run: |
           make lint
       - name: Coverage test
         uses: paambaati/codeclimate-action@v3.0.0
