@@ -18,38 +18,41 @@ export default function printDifference(data1, data2) {
   for (const key in sortedAllKeys) {
     const current = sortedAllKeys[key];
 
-    // если ключи равны и не повторяются
-    if (data1[current] === data2[current] && !hasProp(result, `${indent}  ${current}: ${data1[current]}`)) {
-      result += `\n${indent}  ${current}: ${data1[current]}`;
+    // проверяем есть ли объект
+    if (typeof data1[current] !== 'object' && typeof data2[current] !== 'object') {
+      // если ключи равны и не повторяются
+      if (data1[current] === data2[current] && !hasProp(result, `${indent}  ${current}: ${data1[current]}`)) {
+        result += `\n${indent}  ${current}: ${data1[current]}`;
 
-    // если ключи не равны
-    } else if (data1[current] !== data2[current]) {
-      // если есть первый ключ и нет второго
-      if (Object.hasOwn(data1, current) && !Object.hasOwn(data2, current)) {
-        result += `\n${indent}- ${current}: ${data1[current]}`;
+        // если ключи не равны
+      } else if (data1[current] !== data2[current]) {
+        // если есть первый ключ и нет второго
+        if (Object.hasOwn(data1, current) && !Object.hasOwn(data2, current)) {
+          result += `\n${indent}- ${current}: ${data1[current]}`;
 
-      // если есть первый ключ и второй и не повторяются
-      } else if (Object.hasOwn(data1, current)
-        && Object.hasOwn(data2, current)
-        && !hasProp(result, `${indent}- ${current}: ${data1[current]}`)
-        && (typeof data1[current] !== 'object' || typeof data2[current] !== 'object')) {
-        result += `\n${indent}- ${current}: ${data1[current]}`;
-        result += `\n${indent}+ ${current}: ${data2[current]}`;
+          // если есть первый ключ и второй и не повторяются
+        } else if (Object.hasOwn(data1, current)
+          && Object.hasOwn(data2, current)
+          && !hasProp(result, `${indent}- ${current}: ${data1[current]}`)
+          && (typeof data1[current] !== 'object' || typeof data2[current] !== 'object')) {
+          result += `\n${indent}- ${current}: ${data1[current]}`;
+          result += `\n${indent}+ ${current}: ${data2[current]}`;
 
-      // если нет первого ключа, но есть второй
-      } else if (!Object.hasOwn(data1, current)
-        && Object.hasOwn(data2, current)) {
-        result += `\n${indent}+ ${current}: ${data2[current]}`;
-
-      // если оба объекты
-      } else if (typeof data1[current] === 'object' && typeof data2[current] === 'object') {
-        result += `,\n${indent}- ${current}: `;
+          // если нет первого ключа, но есть второй
+        } else if (!Object.hasOwn(data1, current)
+          && Object.hasOwn(data2, current)) {
+          result += `\n${indent}+ ${current}: ${data2[current]}`;
+        }
+      // если есть объект
+      }
+    } else if (typeof data1[current] === 'object' || typeof data2[current] === 'object') {
+      if (typeof data1[current] === 'object' && !Object.hasOwn(data2, current)) {
+        result += `\n${indent}+ ${current}: {\n`;
         depth += 1;
-        result += printDifference(data1[current], data1[current]);
-        depth -= 1;
       }
     }
   }
+
   depth -= 1;
   // yaml файлы добавляют лишний отступ внизу, хз почему. пока заменил bracketindent на пустое место
   result += `\n${''}}`;
