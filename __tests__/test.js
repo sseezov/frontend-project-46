@@ -2,17 +2,18 @@ import path from 'path';
 import { readFileSync } from 'node:fs';
 import result from '../__fixtures__/result.js';
 import printDifference from '../src/makeDiff.js';
+import genDiff from '../src/index.js';
 
-const getAbslPath = (fileName) => path.resolve(process.cwd(), fileName);
+test('Difference formats', () => {
+  const file1JSON = './__fixtures__/file1.json';
+  const file1YML = './__fixtures__/file1.yml';
+  const file1YAML = './__fixtures__/file1.yaml';
 
-test('Difference JSON format', () => {
-  const file1Path = getAbslPath('__fixtures__/file1.json');
-  const file1Data = readFileSync(file1Path, 'utf-8');
-  const parsedData1 = JSON.parse(file1Data);
+  const file2JSON = './__fixtures__/file2.json';
+  const file2YML = './__fixtures__/file2.yml';
+  const file2YAML = './__fixtures__/file2.yaml';
 
-  const file2Path = getAbslPath('__fixtures__/file2.json');
-  const file2Data = readFileSync(file2Path, 'utf-8');
-  const parsedData2 = JSON.parse(file2Data);
-
-  expect(printDifference(parsedData1, parsedData2)).toEqual(result);
+  expect(genDiff(file1JSON, file2JSON)).toEqual(result);
+  expect(genDiff(file1YML, file2YML)).toEqual(result);
+  expect(genDiff(file1YAML, file2YAML)).toEqual(result);
 });

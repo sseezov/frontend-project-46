@@ -11,7 +11,7 @@ export default function printDifference(data1, data2) {
   const spacesCount = 1;
   const indentSize = depth * spacesCount;
   const indent = ' '.repeat(spacesCount);
-  const bracketIndent = (spacesCount - indentSize >= 0) ? ' '.repeat(spacesCount - indentSize) : '';
+  const bracketIndent = (spacesCount - indentSize > 0) ? ' '.repeat(spacesCount - indentSize) : '';
   let result = '{';
 
   // eslint-disable-next-line guard-for-in
@@ -51,6 +51,7 @@ export default function printDifference(data1, data2) {
     }
   }
   depth -= 1;
-  result += `\n${bracketIndent}}`;
+  // yaml файлы добавляют лишний отступ внизу, хз почему. пока заменил bracketindent на пустое место
+  result += `\n${''}}`;
   return result;
 }
