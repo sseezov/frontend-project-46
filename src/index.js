@@ -50,3 +50,5 @@ export default function genDiff(file1Name, file2Name) {
   const filesDifferences = getDataDifferences(file1ParsedData, file2ParsedData);
   return filesDifferences;
 }
+
+
