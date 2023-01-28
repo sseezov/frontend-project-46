@@ -8,3 +8,5 @@ export default function genDiff(filepath1, filepath2) {
 
   return getDifferenceTree(data1, data2);
 }
+
+
