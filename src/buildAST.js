@@ -5,9 +5,6 @@ const buildDifference = (data1, data2) => {
   const data2Keys = _.keys(data2);
   const unitedKeys = _.union(data1Keys, data2Keys);
   const sortedKeys = _.sortBy(unitedKeys);
-  console.log('data1Keys', data1Keys);
-  console.log('data2Keys', data2Keys);
-  console.log('sortedKeys', sortedKeys);
 
   const children = sortedKeys.map((key) => {
     if (!_.has(data1, key)) {
