@@ -1,4 +1,4 @@
-name: Node CI
+name: node CI
 
 on:
   - push
@@ -8,11 +8,12 @@ env:
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [18.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -27,7 +28,7 @@ jobs:
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_COVERAGE }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE }}
         with:
           coverageCommand: make test-coverage
           debug: true
