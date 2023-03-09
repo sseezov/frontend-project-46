@@ -1,6 +1,6 @@
 import parser from './parsers.js';
 import { getAbslPath } from './utils.js';
-import buildAST from './buildAST.js';
+import buildDifference from './buildAST.js';
 import makeDiff from './formatters/index.js';
 
 const genDiff = (file1Name, file2Name, formatName = 'stylish') => {
@@ -10,8 +10,7 @@ const genDiff = (file1Name, file2Name, formatName = 'stylish') => {
   const file2Data = getAbslPath(file2Name, 'utf-8');
   const parsedData2 = parser(file2Data);
 
-  const ast = buildAST(parsedData1, parsedData2);
-  console.log(ast);
+  const ast = buildDifference(parsedData1, parsedData2);
   return makeDiff(ast, formatName);
 };
 

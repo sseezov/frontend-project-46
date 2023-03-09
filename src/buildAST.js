@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const buildAST = (data1, data2) => {
+const buildDifference = (data1, data2) => {
   const data1Keys = _.keys(data1);
   const data2Keys = _.keys(data2);
   const unitedKeys = _.union(data1Keys, data2Keys);
@@ -25,7 +25,7 @@ const buildAST = (data1, data2) => {
       return {
         type: 'nested',
         name: key,
-        children: buildAST(data1[key], data2[key]),
+        children: buildDifference(data1[key], data2[key]),
       };
     }
     if (_.isEqual(data1[key], data2[key])) {
@@ -47,7 +47,7 @@ const buildAST = (data1, data2) => {
 
 const getDifferenceTree = (data1, data2) => ({
   type: 'root',
-  children: buildAST(data1, data2),
+  children: buildDifference(data1, data2),
 });
 
 export default getDifferenceTree;
