@@ -30,6 +30,8 @@ const makeStylishDiff = (data) => {
       }
       case 'nested': {
         const childrenToString = currentValue.children.flatMap((child) => iter(child, depth + 1));
+        console.log('flatmap:', currentValue.children);
+        console.log('data', data);
         return `${currentIndent(depth)}  ${currentValue.name}: ${buildStylishTree(childrenToString, depth + 1)}`;
       }
       case 'added': {
