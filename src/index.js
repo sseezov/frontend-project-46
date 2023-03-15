@@ -16,7 +16,9 @@ export default function showDiff(filepath1, filepath2) {
 }
 
 function resolvePath(filepath){
-  return filepath.includes('fixtures') ? filepath : path.resolve() + `\\__fixtures__\\${filepath}`
+  return filepath.includes('fixtures')
+  ? filepath
+  : `${path.resolve()}\\__fixtures__\\${filepath}`
 }
 
 function generateDiff(obj1, obj2) {
