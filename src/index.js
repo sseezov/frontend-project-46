@@ -1,10 +1,8 @@
-import { readFileSync } from 'node:fs';
 import _ from 'lodash';
 import path from 'node:path';
+import parser from './parsers.js';
 
-function resolvePath(filepath) {
-  return path.resolve(process.cwd(), filepath);
-}
+const resolvePath = (filepath) => path.resolve(process.cwd(), filepath);
 
 function generateDiff(obj1, obj2) {
   const keys1 = Object.keys(obj1);
@@ -29,18 +27,15 @@ function generateDiff(obj1, obj2) {
     }
   }
   result.push('}');
-  console.log('result', result.join('\n'));
   return result.join('\n');
 }
 
 export default function showDiff(filepath1, filepath2) {
   const path1 = resolvePath(filepath1);
   const path2 = resolvePath(filepath2);
-  const data1 = readFileSync(path1, 'utf-8');
-  const data2 = readFileSync(path2, 'utf-8');
 
-  const parsedObj1 = JSON.parse(data1);
-  const parsedObj2 = JSON.parse(data2);
+  const data1 = parser(path1);
+  const data2 = parser(path2);
 
-  return generateDiff(parsedObj1, parsedObj2);
+  return generateDiff(data1, data2);
 }
