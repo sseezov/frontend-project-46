@@ -1,14 +1,12 @@
 name: node CI
 
-on:
-  - push
+on: [push]
 
-env:
-  CI: true
+# env:
+#   CI: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
