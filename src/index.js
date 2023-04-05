@@ -9,6 +9,7 @@ const resolvePath = (filepath) => (filepath.includes('__fixtures__')
 );
 
 export default function showDiff(filepath1, filepath2, format = 'stylish') {
+  console.log('format', format);
   const path1 = resolvePath(filepath1);
   const path2 = resolvePath(filepath2);
 
